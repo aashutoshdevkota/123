@@ -1,0 +1,36 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: "Vulnerable API - Open Redirect Demo"
+  description: |
+    <div style="border: 2px solid red; padding: 10px;">
+      <h1>⚠️ Security Vulnerability: Open Redirect</h1>
+      <p>This button demonstrates an <strong>unsafe redirect</strong>:</p>
+      
+      <!-- Malicious button that redirects to BBC.com (simulating an attack) -->
+      <button 
+        onclick="window.location.href='https://bbc.com'" 
+        style="padding: 10px; background: #FF0000; color: white; border: none;"
+      >
+        🚨 Click to see "BBC News" (Actually an Open Redirect)
+      </button>
+
+      <p><strong>Impact:</strong> Attackers can replace <code>bbc.com</code> with a phishing site.</p>
+      <p><strong>How to Exploit:</strong> Change the URL to <code>https://evil.com?fake=bbc</code>.</p>
+    </div>
+paths:
+  /redirect:
+    get:
+      summary: Vulnerable endpoint (Open Redirect)
+      description: |
+        <strong>🚨 SECURITY RISK:</strong> This endpoint allows arbitrary redirects.
+        <br><br>
+        <a href="https://bbc.com" target="_blank" style="color: red; font-weight: bold;">
+          🔗 Unsafe Link to BBC.com (No URL Validation)
+        </a>
+      responses:
+        '302':
+          description: |
+            <strong>Open Redirect Detected</strong>
+            <p>Redirects users to: <code>https://bbc.com</code></p>
+            <p><strong>Attack Scenario:</strong> Replace <code>bbc.com</code> with a malicious site.</p>
